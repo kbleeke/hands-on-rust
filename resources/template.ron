@@ -1,0 +1,88 @@
+Templates(
+    entities: [
+        Template(
+            entity_type: Item,
+            name: "Healing Potion",
+            glyph: "healing",
+            level: [0, 1, 2],
+            provides: [("Healing", 6)],
+            frequency: 2
+        ),
+        Template(
+            entity_type: Item,
+            name: "Healing Potion (Weak)",
+            glyph: "healing",
+            level: [0, 1, 2],
+            provides: [("Healing", 2)],
+            frequency: 2
+        ),
+        Template(
+            entity_type: Item,
+            name: "Dungeon Map",
+            glyph: "map",
+            level: [0, 1, 2],
+            provides: [("MagicMap", 0)],
+            frequency: 1,
+        ),
+        Template(
+            entity_type: Enemy,
+            name: "Goblin",
+            glyph: "goblin",
+            level: [0],
+            hp: Some(1),
+            frequency: 3,
+            base_damage: Some(1)
+        ),
+        Template(
+            entity_type: Enemy,
+            name: "Orc",
+            glyph: "orc",
+            level: [0, 1, 2],
+            hp: Some(2),
+            frequency: 2,
+            base_damage: Some(1)
+        ),
+        Template(
+            entity_type: Enemy,
+            name: "Ogre",
+            glyph: "ogre",
+            level: [1,2],
+            hp: Some(5),
+            frequency: 1,
+            base_damage: Some(2)
+        ),
+        Template(
+            entity_type: Enemy,
+            name: "Ettin",
+            glyph: "ettin",
+            level: [2],
+            hp: Some(10),
+            frequency: 1,
+            base_damage: Some(3)
+        ),
+        Template(
+            entity_type: Item,
+            name: "Rusty Sword",
+            glyph: "rustysword",
+            level: [0,1,2],
+            frequency: 1,
+            base_damage: Some(1)
+        ),
+        Template(
+            entity_type: Item,
+            name: "Shiny Sword",
+            glyph: "sword",
+            level: [0,1,2],
+            frequency: 1,
+            base_damage: Some(2)
+        ),
+        Template(
+            entity_type: Item,
+            name: "Huge Sword",
+            glyph: "greatsword",
+            level: [1,2],
+            frequency: 1,
+            base_damage: Some(3)
+        ),
+    ]
+)

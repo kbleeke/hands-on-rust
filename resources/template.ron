@@ -3,7 +3,7 @@ Templates(
         Template(
             entity_type: Item,
             name: "Healing Potion",
-            glyph: "healing",
+            glyph: '!',
             level: [0, 1, 2],
             provides: [("Healing", 6)],
             frequency: 2
@@ -11,7 +11,7 @@ Templates(
         Template(
             entity_type: Item,
             name: "Healing Potion (Weak)",
-            glyph: "healing",
+            glyph: '!',
             level: [0, 1, 2],
             provides: [("Healing", 2)],
             frequency: 2
@@ -19,7 +19,7 @@ Templates(
         Template(
             entity_type: Item,
             name: "Dungeon Map",
-            glyph: "map",
+            glyph: '{',
             level: [0, 1, 2],
             provides: [("MagicMap", 0)],
             frequency: 1,
@@ -27,7 +27,7 @@ Templates(
         Template(
             entity_type: Enemy,
             name: "Goblin",
-            glyph: "goblin",
+            glyph: 'g',
             level: [0],
             hp: Some(1),
             frequency: 3,
@@ -36,7 +36,7 @@ Templates(
         Template(
             entity_type: Enemy,
             name: "Orc",
-            glyph: "orc",
+            glyph: 'o',
             level: [0, 1, 2],
             hp: Some(2),
             frequency: 2,
@@ -45,7 +45,7 @@ Templates(
         Template(
             entity_type: Enemy,
             name: "Ogre",
-            glyph: "ogre",
+            glyph: 'O',
             level: [1,2],
             hp: Some(5),
             frequency: 1,
@@ -54,7 +54,7 @@ Templates(
         Template(
             entity_type: Enemy,
             name: "Ettin",
-            glyph: "ettin",
+            glyph: 'E',
             level: [2],
             hp: Some(10),
             frequency: 1,
@@ -63,7 +63,7 @@ Templates(
         Template(
             entity_type: Item,
             name: "Rusty Sword",
-            glyph: "rustysword",
+            glyph: 's',
             level: [0,1,2],
             frequency: 1,
             base_damage: Some(1)
@@ -71,15 +71,15 @@ Templates(
         Template(
             entity_type: Item,
             name: "Shiny Sword",
-            glyph: "sword",
+            glyph: 'S',
             level: [0,1,2],
             frequency: 1,
             base_damage: Some(2)
         ),
         Template(
             entity_type: Item,
-            name: "Huge Sword",
-            glyph: "greatsword",
+            name: "Huge Swort",
+            glyph: '/',
             level: [1,2],
             frequency: 1,
             base_damage: Some(3)

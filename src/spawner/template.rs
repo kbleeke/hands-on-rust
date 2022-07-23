@@ -7,7 +7,7 @@ use serde::Deserialize;
 
 use crate::{
     constants::{ITEM_DEPTH, MONSTER_DEPTH},
-    prelude::*,
+    prelude::*, GameAssets,
 };
 
 #[derive(Debug, Clone, Deserialize)]
@@ -16,7 +16,7 @@ pub struct Template {
     pub level: HashSet<usize>,
     pub frequency: usize,
     pub name: String,
-    pub glyph: String,
+    pub glyph: char,
     #[serde(default)]
     pub provides: Vec<(String, i32)>,
     pub hp: Option<i32>,
@@ -49,7 +49,7 @@ impl Templates {
         from_reader(file).expect("load templates")
     }
 
-    pub fn spawn_entities(&self, commands: &mut Commands, assets: &AssetServer, level: i32, spawn_points: &[Point]) {
+    pub fn spawn_entities(&self, commands: &mut Commands, assets: &GameAssets, level: i32, spawn_points: &[Point]) {
         let available_entities: Vec<_> = self
             .entities
             .iter()
@@ -63,14 +63,17 @@ impl Templates {
         }
     }
 
-    fn spawn_entity(&self, pt: &Point, template: &Template, commands: &mut Commands, assets: &AssetServer) {
-        let texture = assets.load(&format!("tiles2/{}.png", template.glyph));
-        let mut entity = commands.spawn_bundle(SpriteBundle {
+    fn spawn_entity(&self, pt: &Point, template: &Template, commands: &mut Commands, assets: &GameAssets) {
+        let mut entity = commands.spawn_bundle(SpriteSheetBundle {
             transform: Transform {
                 translation: Vec3::new(0., 0., template.entity_type.depth()),
                 ..Default::default()
             },
-            texture,
+            sprite: TextureAtlasSprite {
+                index: template.glyph as usize,
+                ..Default::default()
+            },
+            texture_atlas: assets.atlas.clone(),
             ..Default::default()
         });
         entity

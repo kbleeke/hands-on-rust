@@ -11,7 +11,7 @@ pub struct MapBuilder {
     pub monster_spawns: Vec<Point>,
     pub player_start: Point,
     pub amulet_start: Point,
-    pub theme: Box<dyn Fn(&AssetServer) -> MapTheme>,
+    pub theme: Box<dyn Fn() -> MapTheme>,
 }
 
 impl Default for MapBuilder {

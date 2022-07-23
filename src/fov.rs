@@ -8,7 +8,7 @@ pub fn fov(mut views: Query<(&Point, &mut FieldOfView), Changed<Point>>, map: Re
 }
 
 pub fn reveal_map(
-    mut tiles: Query<(&mut Visibility, &mut Sprite, &Point), With<TileType>>,
+    mut tiles: Query<(&mut Visibility, &mut TextureAtlasSprite, &Point), With<TileType>>,
     player: Query<(&FieldOfView, ChangeTrackers<FieldOfView>), With<Player>>,
     map: Res<Map>,
 ) {

@@ -27,7 +27,7 @@ pub fn player_input(
             info!("picking up item {item:?}");
             commands
                 .entity(item)
-                .remove_bundle::<SpriteBundle>()
+                .remove_bundle::<SpriteSheetBundle>()
                 .remove::<Point>()
                 .insert(Carried(id))
                 .despawn_descendants();

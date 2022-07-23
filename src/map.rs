@@ -153,7 +153,7 @@ pub fn map_coords(index: usize) -> Point {
     Point::new(x as i32, y as i32)
 }
 
-pub fn spawn_map(commands: &mut Commands, assets: &MapTheme, map: &Map) {
+pub fn spawn_map(commands: &mut Commands, game_assets: &GameAssets, assets: &MapTheme, map: &Map) {
     for y in 0..SCREEN_HEIGHT {
         for x in 0..SCREEN_WIDTH {
             let idx = map_idx(x, y);
@@ -166,7 +166,14 @@ pub fn spawn_map(commands: &mut Commands, assets: &MapTheme, map: &Map) {
             };
 
             commands
-                .spawn_bundle(SpriteBundle { texture, ..default() })
+                .spawn_bundle(SpriteSheetBundle {
+                    texture_atlas: game_assets.atlas.clone(),
+                    sprite: TextureAtlasSprite {
+                        index: texture,
+                        ..Default::default()
+                    },
+                    ..default()
+                })
                 .insert(ttype)
                 .insert(Point::new(x, y))
                 .insert(TileSized);
@@ -185,8 +192,8 @@ pub fn update_revealed(player: Query<&FieldOfView, (With<Player>, Changed<FieldO
     }
 }
 
-pub fn generate_map(mut commands: Commands, mut map: ResMut<Map>, assets: Res<GameAssets>, server: Res<AssetServer>) {
-    let player_start = random_map(&mut commands, &mut *map, &server, &assets, 0);
+pub fn generate_map(mut commands: Commands, mut map: ResMut<Map>, assets: Res<GameAssets>) {
+    let player_start = random_map(&mut commands, &mut *map, &assets, 0);
 
     spawn_player(&mut commands, &assets, &player_start);
     // spawn_amulet_of_yala(&mut commands, &assets, &mb.amulet_start);
@@ -196,10 +203,10 @@ pub fn generate_map(mut commands: Commands, mut map: ResMut<Map>, assets: Res<Ga
 }
 
 /// returns player start
-fn random_map(commands: &mut Commands, map: &mut Map, server: &AssetServer, assets: &GameAssets, level: i32) -> Point {
+fn random_map(commands: &mut Commands, map: &mut Map, assets: &GameAssets, level: i32) -> Point {
     let mb = MapBuilder::new();
     *map = mb.map;
-    let theme = (mb.theme)(&server);
+    let theme = (mb.theme)();
 
     if level == MAX_LEVEL {
         spawn_amulet_of_yala(commands, assets, &mb.amulet_start);
@@ -208,9 +215,9 @@ fn random_map(commands: &mut Commands, map: &mut Map, server: &AssetServer, asse
         map.tiles[exit_idx] = TileType::Exit;
     }
 
-    spawn_map(commands, &theme, &map);
+    spawn_map(commands, &assets, &theme, &map);
 
-    spawn_level(commands, server, level, &mb.monster_spawns);
+    spawn_level(commands, assets, level, &mb.monster_spawns);
     mb.player_start
 }
 
@@ -218,7 +225,6 @@ pub fn regenerate_map(
     mut commands: Commands,
     mut map: ResMut<Map>,
     assets: Res<GameAssets>,
-    server: Res<AssetServer>,
     entities: Query<Entity, (With<Point>, Without<Player>)>,
     mut player: Query<(&mut Player, &mut Point, &mut FieldOfView)>,
 ) {
@@ -230,7 +236,7 @@ pub fn regenerate_map(
     player.level += 1;
     fov.visible_tiles.clear();
 
-    let player_pos = random_map(&mut commands, &mut map, &server, &assets, player.level);
+    let player_pos = random_map(&mut commands, &mut map, &assets, player.level);
     *coords = player_pos;
 
     info!("map regenerated");

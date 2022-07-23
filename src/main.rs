@@ -227,18 +227,26 @@ fn create_camera(mut commands: Commands) {
 
 pub struct GameAssets {
     font: Handle<Font>,
-    player: Handle<Image>,
-    amulet: Handle<Image>,
+    #[allow(unused)]
+    spritesheet: Handle<Image>,
+    atlas: Handle<TextureAtlas>,
 }
 
 impl FromWorld for GameAssets {
     fn from_world(world: &mut World) -> Self {
         let assets = world.get_resource::<AssetServer>().unwrap();
 
+        let font = assets.load("fonts/FiraSans-Bold.ttf");
+        let spritesheet = assets.load("dungeonfont.png");
+        let atlas = TextureAtlas::from_grid(spritesheet.clone(), Vec2::splat(32.), 16, 16);
+
+        let mut atlases = world.get_resource_mut::<Assets<TextureAtlas>>().unwrap();
+        let atlas = atlases.add(atlas);
+
         Self {
-            font: assets.load("fonts/FiraSans-Bold.ttf"),
-            player: assets.load("tiles2/player.png"),
-            amulet: assets.load("tiles2/amulet.png"),
+            font,
+            spritesheet,
+            atlas,
         }
     }
 }
@@ -268,7 +276,7 @@ fn transform_entities(
     }
 }
 
-fn resize_entities(mut entities: Query<&mut Sprite, With<TileSized>>, tile_params: Res<TileParams>) {
+fn resize_entities(mut entities: Query<&mut TextureAtlasSprite, With<TileSized>>, tile_params: Res<TileParams>) {
     for mut sprite in entities.iter_mut() {
         sprite.custom_size = Some(Vec2::splat(tile_params.tile_size));
     }

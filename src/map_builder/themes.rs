@@ -1,23 +1,21 @@
-use crate::prelude::*;
-
 pub struct MapTheme {
-    pub floor: Handle<Image>,
-    pub wall: Handle<Image>,
-    pub exit: Handle<Image>,
+    pub floor: usize,
+    pub wall: usize,
+    pub exit: usize,
 }
 
-pub fn dungeon_theme(server: &AssetServer) -> MapTheme {
+pub fn dungeon_theme() -> MapTheme {
     MapTheme {
-        floor: server.load("tiles2/floor.png"),
-        wall: server.load("tiles2/wall.png"),
-        exit: server.load("tiles2/stairs.png"),
+        floor: '.' as usize,
+        wall: '#' as usize,
+        exit: '>' as usize,
     }
 }
 
-pub fn forest_theme(server: &AssetServer) -> MapTheme {
+pub fn forest_theme() -> MapTheme {
     MapTheme {
-        floor: server.load("tiles2/sand.png"),
-        wall: server.load("tiles2/tree.png"),
-        exit: server.load("tiles2/stairs.png"),
+        floor:  ';' as usize,
+        wall: '"' as usize,
+        exit: '>' as usize,
     }
 }

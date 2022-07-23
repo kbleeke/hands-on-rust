@@ -9,8 +9,12 @@ use self::template::Templates;
 
 pub fn spawn_player(commands: &mut Commands, assets: &GameAssets, start: &Point) {
     commands
-        .spawn_bundle(SpriteBundle {
-            texture: assets.player.clone(),
+        .spawn_bundle(SpriteSheetBundle {
+            texture_atlas: assets.atlas.clone(),
+            sprite: TextureAtlasSprite {
+                index: '@' as usize,
+                ..Default::default()
+            },
             transform: Transform {
                 translation: Vec3::new(0., 0., PLAYER_DEPTH),
                 ..default()
@@ -27,8 +31,12 @@ pub fn spawn_player(commands: &mut Commands, assets: &GameAssets, start: &Point)
 
 pub fn spawn_amulet_of_yala(commands: &mut Commands, assets: &GameAssets, pos: &Point) {
     commands
-        .spawn_bundle(SpriteBundle {
-            texture: assets.amulet.clone(),
+        .spawn_bundle(SpriteSheetBundle {
+            texture_atlas: assets.atlas.clone(),
+            sprite: TextureAtlasSprite {
+                index: '|' as usize,
+                ..Default::default()
+            },
             transform: Transform {
                 translation: Vec3::new(0., 0., ITEM_DEPTH),
                 ..Default::default()
@@ -42,7 +50,7 @@ pub fn spawn_amulet_of_yala(commands: &mut Commands, assets: &GameAssets, pos: &
         .insert(AmuletOfYala);
 }
 
-pub fn spawn_level(commands: &mut Commands, assets: &AssetServer, level: i32, spawn_points: &[Point]) {
+pub fn spawn_level(commands: &mut Commands, assets: &GameAssets, level: i32, spawn_points: &[Point]) {
     let template = Templates::load();
     template.spawn_entities(commands, assets, level, spawn_points)
 }

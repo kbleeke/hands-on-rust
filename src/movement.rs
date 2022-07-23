@@ -9,6 +9,7 @@ pub fn movement(mut commands: Commands, mut movers: Query<(Entity, &mut Point, &
 
     for (id, mut coords, movement) in movers.iter_mut() {
         if taken_squares.contains(&movement.destination) {
+            commands.entity(id).remove::<WantsToMove>();
             continue;
         }
 

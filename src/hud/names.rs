@@ -53,7 +53,7 @@ pub fn scale_entity_name(mut text: Query<&mut Text, With<NameText>>, tile_params
 pub fn mouse_hover(
     mut mouse: EventReader<CursorMoved>,
     windows: Res<Windows>,
-    entity: Query<(&Sprite, &Transform, &HasNameText, &Visibility), With<Name>>,
+    entity: Query<(&TextureAtlasSprite, &Transform, &HasNameText, &Visibility), With<Name>>,
     camera: Query<(&Transform, ChangeTrackers<Transform>), With<Camera2d>>,
     mut name_node: Query<&mut Visibility, (With<NameText>, Without<Name>)>,
 ) {
